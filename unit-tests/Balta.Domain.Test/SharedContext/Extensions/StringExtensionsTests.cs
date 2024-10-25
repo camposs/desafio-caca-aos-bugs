@@ -1,5 +1,3 @@
-using Balta.Domain.AccountContext.ValueObjects;
-using Balta.Domain.SharedContext;
 using Balta.Domain.SharedContext.Extensions;
 
 namespace Balta.Domain.Test.SharedContext.Extensions;

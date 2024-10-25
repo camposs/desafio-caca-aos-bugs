@@ -97,7 +97,14 @@ public class EmailTests
     [Fact]
     public void ShouldExplicitConvertFromString()
     {
-        Assert.Fail();
+        string emailAddress = "teste@bugs.com";
+        var dateTimeProvider = new DateTimeProvider();
+
+        var email = Email.ShouldCreate(emailAddress, dateTimeProvider);
+
+        var email2 = (Email)emailAddress;
+
+        Assert.Equal(email.Address, email2.Address);
     }
 
     [Fact]

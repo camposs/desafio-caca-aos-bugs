@@ -1,5 +1,7 @@
+using System.Net;
 using System.Text.RegularExpressions;
 using Balta.Domain.AccountContext.ValueObjects.Exceptions;
+using Balta.Domain.SharedContext;
 using Balta.Domain.SharedContext.Abstractions;
 using Balta.Domain.SharedContext.Extensions;
 using Balta.Domain.SharedContext.ValueObjects;
@@ -61,9 +63,19 @@ public partial record Email : ValueObject
     public static implicit operator string(Email email)
         => email.ToString();
 
+    public static implicit operator Email(string email)
+    {
+        var dateTimeProvider = new DateTimeProvider();
+        var verificationCode = VerificationCode.ShouldCreate(dateTimeProvider);
+
+        return new Email(email, email.ToBase64(), verificationCode);
+
+    }
+
+
     #endregion
 
-    #region Overrides
+        #region Overrides
 
     public override string ToString() => Address;
 
