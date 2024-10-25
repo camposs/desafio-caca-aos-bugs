@@ -2,6 +2,7 @@ using Balta.Domain.AccountContext.ValueObjects;
 using Balta.Domain.AccountContext.ValueObjects.Exceptions;
 using Balta.Domain.SharedContext;
 using Balta.Domain.SharedContext.Abstractions;
+using Balta.Domain.SharedContext.Extensions;
 using System.Net.Mail;
 
 namespace Balta.Domain.Test.AccountContext.ValueObjects;
@@ -84,8 +85,13 @@ public class EmailTests
 
     [Fact]
     public void ShouldHashEmailAddress()
-    { 
-        Assert.Fail(); 
+    {
+        string emailAddress = "teste@bugs.com";
+        var dateTimeProvider = new DateTimeProvider();
+
+        var email = Email.ShouldCreate(emailAddress, dateTimeProvider);
+
+        Assert.Equal(emailAddress.ToBase64(), email.Hash);
     }
 
     [Fact]
