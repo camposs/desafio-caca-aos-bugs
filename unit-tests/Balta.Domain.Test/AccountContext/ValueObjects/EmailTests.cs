@@ -1,34 +1,124 @@
-namespace Balta.Domain.Test.AccountContext.ValueObjects;
+using Balta.Domain.AccountContext.ValueObjects;
+using Balta.Domain.AccountContext.ValueObjects.Exceptions;
+using Balta.Domain.SharedContext;
+using Balta.Domain.SharedContext.Abstractions;
+using System.Net.Mail;
 
+namespace Balta.Domain.Test.AccountContext.ValueObjects;
 public class EmailTests
 {
     [Fact]
-    public void ShouldLowerCaseEmail() => Assert.Fail();
-    
+    public void ShouldLowerCaseEmail()
+    {
+        string emailAddress = "TESTE@BUGS.COM";
+        var dateTimeProvider = new DateTimeProvider();
+
+        var email = Email.ShouldCreate(emailAddress, dateTimeProvider);
+
+        Assert.Equal("teste@bugs.com", email);
+    }
+
     [Fact]
-    public void ShouldTrimEmail() => Assert.Fail();
-    
+    public void ShouldTrimEmail()
+    {
+        string emailAddress = "     teste@bugs.com                   ";
+        var dateTimeProvider = new DateTimeProvider();
+
+        var email = Email.ShouldCreate(emailAddress, dateTimeProvider);
+
+        Assert.Equal("teste@bugs.com", email);
+    }
+
     [Fact]
-    public void ShouldFailIfEmailIsNull() => Assert.Fail();
-    
+    public void ShouldFailIfEmailIsNull()
+    {
+
+        string emailAddress = null;
+        var dateTimeProvider = new DateTimeProvider();
+        var exceptionType = typeof(NullReferenceException);
+
+        Assert.Throws(exceptionType, () =>
+        {
+            Email.ShouldCreate(emailAddress, dateTimeProvider);
+        });
+    }
+
     [Fact]
-    public void ShouldFailIfEmailIsEmpty() => Assert.Fail();
-    
+    public void ShouldFailIfEmailIsEmpty()
+    {
+
+        string emailAddress = "";
+        var dateTimeProvider = new DateTimeProvider();
+        var exceptionType = typeof(InvalidEmailException);
+
+        Assert.Throws(exceptionType, () =>
+        {
+            Email.ShouldCreate(emailAddress, dateTimeProvider);
+        });
+    }
+
     [Fact]
-    public void ShouldFailIfEmailIsInvalid() => Assert.Fail();
-    
+    public void ShouldFailIfEmailIsInvalid()
+    {
+
+        string emailAddress = "teste";
+        var dateTimeProvider = new DateTimeProvider();
+        var exceptionType = typeof(InvalidEmailException);
+
+        Assert.Throws(exceptionType, () =>
+        {
+            Email.ShouldCreate(emailAddress, dateTimeProvider);
+        });
+    }
+
     [Fact]
-    public void ShouldPassIfEmailIsValid() => Assert.Fail();
-    
+    public void ShouldPassIfEmailIsValid()
+    {
+        string emailAddress = "teste@bugs.com";
+        var dateTimeProvider = new DateTimeProvider();
+
+        var email = Email.ShouldCreate(emailAddress, dateTimeProvider);
+
+        Assert.True(email != null);
+    }
+
     [Fact]
-    public void ShouldHashEmailAddress() => Assert.Fail();
-    
+    public void ShouldHashEmailAddress()
+    { 
+        Assert.Fail(); 
+    }
+
     [Fact]
-    public void ShouldExplicitConvertFromString() => Assert.Fail();
-    
+    public void ShouldExplicitConvertFromString()
+    {
+        Assert.Fail();
+    }
+
     [Fact]
-    public void ShouldExplicitConvertToString() => Assert.Fail();
-    
+    public void ShouldExplicitConvertToString()
+    {
+        string emailAddress = "teste@bugs.com";
+        var dateTimeProvider = new DateTimeProvider();
+
+        var email = Email.ShouldCreate(emailAddress, dateTimeProvider);
+
+        string email2 = Convert.ToString(email.Address);
+
+        Assert.Equal(emailAddress, email2);
+
+    }
+
     [Fact]
-    public void ShouldReturnEmailWhenCallToStringMethod() => Assert.Fail();
+    public void ShouldReturnEmailWhenCallToStringMethod()
+    {
+        string emailAddress = "teste@bugs.com";
+        var dateTimeProvider = new DateTimeProvider();
+
+        var email = Email.ShouldCreate(emailAddress, dateTimeProvider);
+
+        string email2 = email.ToString();
+
+        Assert.Equal(emailAddress, email2);
+
+    }
 }
