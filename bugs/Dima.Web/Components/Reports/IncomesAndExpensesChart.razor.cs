@@ -42,23 +42,23 @@ public partial class IncomesAndExpensesChartComponent : ComponentBase
         var incomes = new List<double>();
         var expenses = new List<double>();
 
-        //foreach (var item in result.Data)
-        //{
-        //    incomes.Add((double)item.Incomes);
-        //    expenses.Add(-(double)item.Expenses);
-        //    Labels.Add(GetMonthName(item.Month));
-        //}
+        foreach (var item in result.Data)
+        {
+            incomes.Add((double)item.Incomes);
+            expenses.Add(-(double)item.Expenses);
+            Labels.Add(GetMonthName(item.Month));
+        }
 
-        //Options.YAxisTicks = 1000;
-        //Options.LineStrokeWidth = 5;
-        //Options.ChartPalette = ["#76FF01", Colors.Red.Default];
-        //Series =
-        //[
-        //    new ChartSeries { Name = "Receitas", Data = incomes.ToArray() },
-        //    new ChartSeries { Name = "Saídas", Data = expenses.ToArray() }
-        //];
+        Options.YAxisTicks = 1000;
+        Options.LineStrokeWidth = 5;
+        Options.ChartPalette = ["#76FF01", Colors.Red.Default];
+        Series =
+        [
+            new ChartSeries { Name = "Receitas", Data = incomes.ToArray() },
+            new ChartSeries { Name = "Saídas", Data = expenses.ToArray() }
+        ];
 
-        // StateHasChanged();
+        StateHasChanged();
     }
 
     #endregion
