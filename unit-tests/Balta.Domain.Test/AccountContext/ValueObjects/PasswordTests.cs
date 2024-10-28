@@ -93,14 +93,22 @@ public class PasswordTests
         string plainText = "12345678";
         string hash = "10000.b6t41V3ohPuTMC8pfEIOWw==.kbmt52SQDxEW9DnaBHZTRj9BkZ8waz4qKVfs8ls3hUA=";
 
-        var match = Password.ShouldMatch(hash,plainText);
+        var match = Password.ShouldMatch(hash, plainText);
 
         Assert.True(match);
     }
 
     [Fact]
-    public void ShouldGenerateStrongPassword() => Assert.Fail();
-    
+    public void ShouldGenerateStrongPassword()
+    {
+        var plainText = Password.ShouldGenerate();
+
+        var pass = Password.ShouldCreate(plainText);
+
+        Assert.True(pass.Hash != "");
+
+    }
+
     [Fact]
     public void ShouldImplicitConvertToString()
     {
@@ -120,12 +128,12 @@ public class PasswordTests
 
         var pass = Password.ShouldCreate(plainText);
 
-        Assert.Equal(pass.Hash , pass.ToString() );
+        Assert.Equal(pass.Hash, pass.ToString());
     }
 
     [Fact]
     public void ShouldMarkPasswordAsExpired() => Assert.Fail();
-    
+
     [Fact]
     public void ShouldFailIfPasswordIsExpired()
     {
@@ -142,10 +150,12 @@ public class PasswordTests
     [Fact]
     public void ShouldFailIfPasswordIsMarkedAsMustChange()
     {
-        string plainText = "12345678901234567890";
+        Assert.Fail();
 
-        var pass = Password.ShouldCreate(plainText);
+        //string plainText = "12345678901234567890";
 
-        Assert.False(pass.MustChange);
+        //var pass = Password.ShouldCreate(plainText);
+
+        //Assert.False(pass.MustChange);
     }
 }
